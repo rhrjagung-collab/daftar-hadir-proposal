@@ -80,11 +80,11 @@ function apiSubmit_(payload) {
   const sig = parseSignatureB64_(payload.signature_png_b64);
   if (sig.error) {
     const msgs = {
-      signature_missing: 'Tanda tangan belum diisi.',
-      signature_not_png: 'Format tanda tangan harus PNG.',
-      signature_not_base64: 'Berkas tanda tangan tidak valid.',
-      signature_too_small: 'Tanda tangan terlalu kecil. Tanda tangan terlalu kecil atau kosong.',
-      signature_too_large: 'Ukuran tanda tangan melebihi batas 250 KB.'
+      signature_missing: 'Tanda tangan belum diisi. Tulis tanda tangan pada kotak di bawah.',
+      signature_not_png: 'Gagal membaca gambar tanda tangan. Tekan Hapus lalu tulis ulang.',
+      signature_not_base64: 'Gagal membaca data tanda tangan. Tekan Hapus lalu tulis ulang.',
+      signature_too_small: 'Tanda tangan terlalu kecil atau masih kosong. Tulis lebih jelas dan panjang.',
+      signature_too_large: 'Tanda tangan terlalu besar. Tulis lebih ringkas.'
     };
     return err_(sig.error, msgs[sig.error] || 'Tanda tangan tidak valid.');
   }

@@ -20,65 +20,52 @@
   </header>
 
   <main>
-    <section id="step-verify" class="card" aria-labelledby="verify-title">
-      <div class="step-badge">Langkah 1 dari 3</div>
-      <h1 id="verify-title">Verifikasi Peserta</h1>
+    <div class="card">
+      <h1>Daftar Hadir Peserta</h1>
       <p class="event-line" id="event-line">Memuat jadwal…</p>
-      <label for="nama-select">Pilih nama Anda sesuai jadwal</label>
-      <select id="nama-select" aria-describedby="nama-hint">
-        <option value="">— memuat daftar peserta —</option>
+
+      <label for="nama-select">1. Pilih nama Anda</label>
+      <select id="nama-select">
+        <option value="">— pilih nama —</option>
       </select>
-      <p class="sig-hint" id="nama-hint">Nama yang sudah tanda tangan ditandai "(sudah hadir)".</p>
-      <div class="btn-row">
-        <button type="button" id="btn-verify" disabled>Verifikasi</button>
-      </div>
-      <div id="verify-msg" role="status" aria-live="polite"></div>
-    </section>
+    </div>
 
-    <section id="step-sign" class="card hidden" aria-labelledby="sign-title">
-      <div class="step-badge">Langkah 2 dari 3</div>
-      <h1 id="sign-title">Tanda Tangan Kehadiran</h1>
+    <div class="card hidden" id="sign-card">
+      <h2>2. Tulis tanda tangan Anda</h2>
       <div class="identity" id="identity"></div>
-
-      <label>Pemberitahuan Privasi</label>
-      <p>
-        <a href="privacy.html" target="_blank" rel="noopener">Baca pemberitahuan privasi lengkap</a>
-        (versi <span id="notice-version">—</span>).
-      </p>
+      <p class="sig-hint">Tulis langsung dengan jari atau stylus pada kotak putih di bawah. Tidak perlu mengunggah berkas apa pun.</p>
 
       <div class="check">
         <input type="checkbox" id="chk-notice">
-        <label for="chk-notice" style="margin:0;font-weight:400">Saya menyatakan telah membaca Pemberitahuan Privasi tersebut.</label>
+        <label for="chk-notice" style="margin:0;font-weight:400">Saya telah membaca <a href="privacy.html" target="_blank" rel="noopener">Pemberitahuan Privasi</a> (versi <span id="notice-version">—</span>).</label>
       </div>
       <div class="check">
         <input type="checkbox" id="chk-hadir">
-        <label for="chk-hadir" style="margin:0;font-weight:400">Saya menyatakan bahwa saya hadir pada Seminar Proposal Skripsi ini dan tanda tangan yang saya buat adalah milik saya sendiri.</label>
+        <label for="chk-hadir" style="margin:0;font-weight:400">Saya hadir pada Seminar Proposal Skripsi ini dan tanda tangan yang saya buat adalah milik saya sendiri.</label>
       </div>
 
-      <div class="sig-wrap">
-        <label id="sig-label">Tanda Tangan</label>
-        <div class="sig-box">
-          <canvas id="sig-canvas" aria-labelledby="sig-label"></canvas>
-        </div>
-        <div class="sig-hint">Gunakan jari atau stylus. Area tanda tangan rasio 2:1.</div>
-        <div class="btn-row">
-          <button type="button" class="secondary" id="btn-clear">Hapus</button>
-          <button type="button" id="btn-submit" disabled>Kirim Tanda Tangan</button>
-        </div>
+      <div class="sig-box">
+        <canvas id="sig-canvas" aria-label="Kotak tanda tangan"></canvas>
       </div>
-      <div id="submit-msg" role="status" aria-live="polite"></div>
-    </section>
 
-    <section id="step-done" class="card hidden" aria-labelledby="done-title">
-      <div class="step-badge">Langkah 3 dari 3</div>
-      <h1 id="done-title">Pendaftaran Kehadiran Terkirim</h1>
-      <div id="done-body"></div>
       <div class="btn-row">
-        <a class="home-card" href="index.html" style="border-top-color:var(--navy);text-align:center">
-          <strong>Kembali ke Beranda</strong>
-        </a>
+        <button type="button" class="secondary" id="btn-clear">Hapus</button>
+        <button type="button" id="btn-submit" disabled>Kirim</button>
       </div>
-    </section>
+      <div id="msg" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="card">
+      <h2>Daftar Kehadiran <span class="sig-hint" id="list-updated"></span></h2>
+      <div class="table-scroll">
+        <table class="data" id="tbl-list">
+          <thead>
+            <tr><th>No</th><th>Nama</th><th>NIM</th><th>Status</th><th>Waktu</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">

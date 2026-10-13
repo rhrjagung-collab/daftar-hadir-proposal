@@ -284,6 +284,8 @@ table.data th { background: var(--navy); color: #fff; font-weight: 600; }
 .pill.hadir { background: var(--ok-bg); color: var(--ok-ink); }
 .pill.belum { background: #e4e7eb; color: #52606d; }
 
+tr.me td { background: #fff8e1; }
+
 .home-grid {
   display: grid;
   grid-template-columns: 1fr;

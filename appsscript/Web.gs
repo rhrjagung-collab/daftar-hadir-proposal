@@ -128,12 +128,14 @@ function rosterPayload_(eventId) {
     .sort(function (a, b) {
       return Number(a.no) - Number(b.no);
     });
-  const signed_nims = readAll_('submissions')
-    .filter(function (r) {
-      return str_(r.event_id) === evId && str_(r.type) === 'PESERTA';
-    })
-    .map(function (r) {
-      return str_(r.nim);
-    });
-  return { event: publicEvent_(ev), peserta: peserta, signed_nims: signed_nims, notice: noticePayload_() };
+  const signedRows = readAll_('submissions').filter(function (r) {
+    return str_(r.event_id) === evId && str_(r.type) === 'PESERTA';
+  });
+  const signed = signedRows.map(function (r) {
+    return { nim: str_(r.nim), received_at: str_(r.received_at), receipt_id: str_(r.receipt_id) };
+  });
+  const signed_nims = signed.map(function (s) {
+    return s.nim;
+  });
+  return { event: publicEvent_(ev), peserta: peserta, signed: signed, signed_nims: signed_nims, notice: noticePayload_() };
 }
