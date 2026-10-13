@@ -20,20 +20,37 @@
   </header>
 
   <main>
-    <div class="card">
-      <h1>Daftar Hadir Peserta</h1>
-      <p class="event-line" id="event-line">Memuat jadwal…</p>
+    <div class="doc card">
+      <h1 class="doc-title">DAFTAR HADIR PESERTA SEMINAR PROPOSAL SKRIPSI</h1>
+      <div class="doc-sub">PROGRAM STUDI KESEHATAN MASYARAKAT PROGRAM SARJANA</div>
+      <div class="doc-sub">FAKULTAS ILMU KESEHATAN UPN &ldquo;VETERAN&rdquo; JAKARTA</div>
+      <div class="doc-sub">SEMESTER GANJIL T.A. 2026/2027</div>
+      <p class="doc-meta" id="meta-tanggal">Tanggal Ujian: …</p>
+      <p class="doc-meta" id="meta-tempat">Tempat Ujian: …</p>
 
-      <label for="nama-select">1. Pilih nama Anda</label>
-      <select id="nama-select">
-        <option value="">— pilih nama —</option>
-      </select>
+      <div class="table-scroll">
+        <table class="data doc-table" id="tbl-doc">
+          <thead>
+            <tr><th>NO</th><th>NAMA PESERTA</th><th>NIM</th><th>TANDA TANGAN</th><th>KET</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <p class="sig-hint">
+        Temukan baris Anda, lalu klik tombol <strong>Tanda tangan</strong> pada kolom TANDA TANGAN.
+        Tulis tanda tangan langsung di layar (jari/stylus) lalu simpan. Daftar diperbarui otomatis.
+      </p>
     </div>
+  </main>
 
-    <div class="card hidden" id="sign-card">
-      <h2>2. Tulis tanda tangan Anda</h2>
-      <div class="identity" id="identity"></div>
-      <p class="sig-hint">Tulis langsung dengan jari atau stylus pada kotak putih di bawah. Tidak perlu mengunggah berkas apa pun.</p>
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <h2 id="modal-title">Tanda Tangan</h2>
+      <div class="identity" id="modal-identity"></div>
+
+      <label for="modal-nim">Konfirmasi NIM Anda</label>
+      <input type="text" id="modal-nim" inputmode="numeric" autocomplete="off" maxlength="20" placeholder="Masukkan NIM sesuai baris Anda">
 
       <div class="check">
         <input type="checkbox" id="chk-notice">
@@ -47,26 +64,16 @@
       <div class="sig-box">
         <canvas id="sig-canvas" aria-label="Kotak tanda tangan"></canvas>
       </div>
+      <p class="sig-hint">Tulis tanda tangan Anda di kotak putih di atas. Tidak perlu mengunggah berkas.</p>
 
       <div class="btn-row">
         <button type="button" class="secondary" id="btn-clear">Hapus</button>
-        <button type="button" id="btn-submit" disabled>Kirim</button>
+        <button type="button" id="btn-save" disabled>Simpan Tanda Tangan</button>
+        <button type="button" class="secondary" id="btn-close">Tutup</button>
       </div>
-      <div id="msg" role="status" aria-live="polite"></div>
+      <div id="modal-msg" role="status" aria-live="polite"></div>
     </div>
-
-    <div class="card">
-      <h2>Daftar Kehadiran <span class="sig-hint" id="list-updated"></span></h2>
-      <div class="table-scroll">
-        <table class="data" id="tbl-list">
-          <thead>
-            <tr><th>No</th><th>Nama</th><th>NIM</th><th>Status</th><th>Waktu</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-  </main>
+  </div>
 
   <footer class="site-footer">
     <div>Tanda tangan disimpan pada Google Drive institusi. GitHub tidak menyimpan data peserta.</div>

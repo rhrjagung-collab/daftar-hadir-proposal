@@ -1,16 +1,15 @@
-// peserta.js — one-page flow: pick name → auto-verify → draw → submit → live list updates.
+// peserta.js — document-style daftar hadir: sign inside your own table row.
 (function () {
   'use strict';
 
   var state = {
     event: null,
     notice: null,
-    token: null,
-    participant: null,
     roster: [],
     signedByNim: {},
+    images: {},
+    active: null,
     pad: null,
-    canvas: null,
     busy: false,
     idempotencyKey: DH.uuid()
   };
@@ -18,38 +17,50 @@
   var el = {};
 
   document.addEventListener('DOMContentLoaded', function () {
-    el.eventLine = document.getElementById('event-line');
-    el.select = document.getElementById('nama-select');
-    el.signCard = document.getElementById('sign-card');
-    el.identity = document.getElementById('identity');
+    el.tblBody = document.querySelector('#tbl-doc tbody');
+    el.metaTanggal = document.getElementById('meta-tanggal');
+    el.metaTempat = document.getElementById('meta-tempat');
+    el.modal = document.getElementById('modal');
+    el.modalIdentity = document.getElementById('modal-identity');
+    el.modalNim = document.getElementById('modal-nim');
     el.noticeVersion = document.getElementById('notice-version');
     el.chkNotice = document.getElementById('chk-notice');
     el.chkHadir = document.getElementById('chk-hadir');
     el.btnClear = document.getElementById('btn-clear');
-    el.btnSubmit = document.getElementById('btn-submit');
-    el.msg = document.getElementById('msg');
-    el.tblBody = document.querySelector('#tbl-list tbody');
-    el.listUpdated = document.getElementById('list-updated');
+    el.btnSave = document.getElementById('btn-save');
+    el.btnClose = document.getElementById('btn-close');
+    el.modalMsg = document.getElementById('modal-msg');
     el.canvas = document.getElementById('sig-canvas');
-    state.canvas = el.canvas;
 
-    el.select.addEventListener('change', onSelectName);
-    el.chkNotice.addEventListener('change', updateSubmitEnabled);
-    el.chkHadir.addEventListener('change', updateSubmitEnabled);
+    el.tblBody.addEventListener('click', function (e) {
+      var btn = e.target.closest('button.btn-sign');
+      if (!btn) return;
+      openModal(btn.getAttribute('data-nim'));
+    });
     el.btnClear.addEventListener('click', function () {
       if (state.pad) state.pad.clear();
-      updateSubmitEnabled();
+      updateSaveEnabled();
     });
-    el.btnSubmit.addEventListener('click', onSubmit);
+    el.btnSave.addEventListener('click', onSave);
+    el.btnClose.addEventListener('click', closeModal);
+    el.modal.addEventListener('click', function (e) {
+      if (e.target === el.modal) closeModal();
+    });
+    el.chkNotice.addEventListener('change', updateSaveEnabled);
+    el.chkHadir.addEventListener('change', updateSaveEnabled);
+    el.modalNim.addEventListener('input', function () {
+      el.modalNim.value = el.modalNim.value.replace(/\D/g, '');
+      updateSaveEnabled();
+    });
     window.addEventListener('resize', debounce(function () {
-      if (state.pad) DH_PAD.resize(el.canvas, state.pad);
+      if (state.pad && !el.modal.classList.contains('hidden')) DH_PAD.resize(el.canvas, state.pad);
     }, 250));
 
-    loadRoster();
-    setInterval(loadRoster, 30000);
+    refresh();
+    setInterval(refresh, 30000);
   });
 
-  async function loadRoster() {
+  async function refresh() {
     try {
       var data = await DH.get({ route: 'roster', event_id: DH.config.EVENT_ID || '' });
       if (!data.ok || !data.event) return;
@@ -60,122 +71,132 @@
       (data.signed || []).forEach(function (s) {
         state.signedByNim[s.nim] = s;
       });
-      el.eventLine.textContent =
-        data.event.name + ' — ' + data.event.exam_date_label + ' (' + data.event.exam_place + ')';
+      el.metaTanggal.textContent = 'Tanggal Ujian: ' + data.event.exam_date_label;
+      el.metaTempat.textContent = 'Tempat Ujian: ' + data.event.exam_place;
       el.noticeVersion.textContent = data.notice.version;
-      if (!state.participant) renderSelect();
-      renderList();
+      renderTable();
+      loadMissingImages();
     } catch (e) {
-      el.eventLine.textContent = 'Gagal memuat jadwal. Muat ulang halaman.';
+      /* keep last good table on transient errors */
     }
   }
 
-  function renderSelect() {
-    var current = el.select.value;
-    var opts = ['<option value="">— pilih nama —</option>'];
-    state.roster.forEach(function (p) {
-      var suffix = state.signedByNim[p.nim] ? ' (sudah hadir)' : '';
-      opts.push('<option value="' + esc(p.nim) + '">' + esc(p.nama) + ' — ' + esc(p.nim) + suffix + '</option>');
-    });
-    el.select.innerHTML = opts.join('');
-    if (current) el.select.value = current;
-  }
-
-  function renderList() {
+  function renderTable() {
     el.tblBody.innerHTML = state.roster
       .map(function (p) {
-        var s = state.signedByNim[p.nim];
-        var me = state.participant && state.participant.nim === p.nim ? ' class="me"' : '';
+        var signed = state.signedByNim[p.nim];
+        var ttd;
+        if (signed) {
+          ttd = state.images[p.nim]
+            ? '<img class="sig-img" src="' + state.images[p.nim] + '" alt="Tanda tangan ' + esc(p.nama) + '">'
+            : '<span class="sig-hint">…</span>';
+        } else {
+          ttd =
+            '<button type="button" class="btn-sign" data-nim="' + esc(p.nim) + '">Tanda tangan</button>';
+        }
+        var ket = signed ? 'Hadir' : '';
         return (
-          '<tr' + me + '>' +
-          '<td>' + esc(p.no) + '</td>' +
-          '<td>' + esc(p.nama) + (state.participant && state.participant.nim === p.nim ? ' <strong>(Anda)</strong>' : '') + '</td>' +
+          '<tr>' +
+          '<td class="center">' + esc(p.no) + '.</td>' +
+          '<td>' + esc(p.nama) + '</td>' +
           '<td>' + esc(p.nim) + '</td>' +
-          '<td>' + (s ? '<span class="pill hadir">Hadir</span>' : '<span class="pill belum">Belum</span>') + '</td>' +
-          '<td>' + esc(s ? s.received_at : '') + '</td>' +
+          '<td class="center ttd-cell">' + ttd + '</td>' +
+          '<td class="center"><strong>' + ket + '</strong></td>' +
           '</tr>'
         );
       })
       .join('');
-    var n = Object.keys(state.signedByNim).length;
-    el.listUpdated.textContent = '— ' + n + ' dari ' + state.roster.length + ' sudah hadir';
   }
 
-  async function onSelectName() {
-    var nim = el.select.value;
-    if (!nim) {
-      el.signCard.classList.add('hidden');
-      return;
-    }
-    el.msg.innerHTML = '';
-    try {
-      var data = await DH.post({ route: 'verify', event_id: state.event.event_id, nim: nim });
-      if (!data.ok) {
-        el.msg.innerHTML = banner('err', data.message || 'Verifikasi gagal.');
-        return;
-      }
-      state.token = data.token;
-      state.participant = data.participant;
-      state.idempotencyKey = DH.uuid();
-      el.identity.innerHTML =
-        '<div class="name">' + esc(data.participant.nama) + '</div>' +
-        '<div class="meta">NIM ' + esc(data.participant.nim) + '</div>' +
-        (data.participant.judul ? '<div class="judul">' + esc(data.participant.judul) + '</div>' : '');
-      el.signCard.classList.remove('hidden');
-      renderSelect();
-      renderList();
-      if (!state.pad) {
-        state.pad = DH_PAD.create(el.canvas);
-      }
+  function loadMissingImages() {
+    var missing = Object.keys(state.signedByNim).filter(function (nim) {
+      return !state.images[nim];
+    });
+    if (!missing.length) return;
+    DH.get({ route: 'sig', event_id: state.event.event_id, nims: missing.join(',') })
+      .then(function (data) {
+        if (!data.ok || !data.images) return;
+        Object.keys(data.images).forEach(function (nim) {
+          state.images[nim] = data.images[nim];
+        });
+        renderTable();
+      })
+      .catch(function () {});
+  }
+
+  function openModal(nim) {
+    var p = null;
+    state.roster.forEach(function (row) {
+      if (row.nim === nim) p = row;
+    });
+    if (!p) return;
+    if (state.signedByNim[nim]) return;
+    state.active = p;
+    state.idempotencyKey = DH.uuid();
+    el.modalIdentity.innerHTML =
+      '<div class="name">' + esc(p.nama) + '</div>' +
+      '<div class="meta">NIM ' + esc(p.nim) + '</div>' +
+      (p.judul ? '<div class="judul">' + esc(p.judul) + '</div>' : '');
+    el.modalNim.value = '';
+    el.chkNotice.checked = false;
+    el.chkHadir.checked = false;
+    el.chkNotice.disabled = false;
+    el.chkHadir.disabled = false;
+    el.modalMsg.innerHTML = '';
+    el.modal.classList.remove('hidden');
+    if (!state.pad) state.pad = DH_PAD.create(el.canvas);
+    setTimeout(function () {
       DH_PAD.resize(el.canvas, state.pad);
       state.pad.clear();
-
-      if (state.signedByNim[nim]) {
-        el.msg.innerHTML = banner('warn', 'Anda sudah tanda tangan sebelumnya. Tidak perlu mengulang.');
-        el.chkNotice.disabled = true;
-        el.chkHadir.disabled = true;
-        el.btnClear.disabled = true;
-      } else {
-        el.chkNotice.disabled = false;
-        el.chkHadir.disabled = false;
-        el.btnClear.disabled = false;
-      }
-      updateSubmitEnabled();
-      el.signCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } catch (e) {
-      el.msg.innerHTML = banner('err', 'Gagal menghubungi server: ' + esc(e.message));
-    }
+      updateSaveEnabled();
+      el.modalNim.focus();
+    }, 30);
   }
 
-  function updateSubmitEnabled() {
-    var already = state.participant && state.signedByNim[state.participant.nim];
-    var ready =
+  function closeModal() {
+    el.modal.classList.add('hidden');
+    state.active = null;
+    if (state.pad) state.pad.clear();
+  }
+
+  function updateSaveEnabled() {
+    var ok =
+      state.active &&
+      el.modalNim.value === state.active.nim &&
       state.pad &&
       !state.pad.isEmpty() &&
       el.chkNotice.checked &&
       el.chkHadir.checked &&
-      !state.busy &&
-      !already;
-    el.btnSubmit.disabled = !ready;
+      !state.busy;
+    el.btnSave.disabled = !ok;
   }
 
-  async function onSubmit() {
-    if (state.busy) return;
+  async function onSave() {
+    if (state.busy || !state.active) return;
+    if (el.modalNim.value !== state.active.nim) {
+      el.modalMsg.innerHTML = banner('err', 'NIM tidak sesuai dengan baris yang dipilih.');
+      return;
+    }
     if (!state.pad || state.pad.isEmpty()) {
-      el.msg.innerHTML = banner('err', 'Tanda tangan belum diisi. Tulis pada kotak putih.');
+      el.modalMsg.innerHTML = banner('err', 'Tanda tangan belum diisi.');
       return;
     }
     state.busy = true;
-    updateSubmitEnabled();
-    el.msg.innerHTML = banner('warn', 'Mengirim…');
+    updateSaveEnabled();
+    el.modalMsg.innerHTML = banner('warn', 'Menyimpan…');
     try {
+      var vr = await DH.post({ route: 'verify', event_id: state.event.event_id, nim: state.active.nim });
+      if (!vr.ok) {
+        el.modalMsg.innerHTML = banner('err', vr.message || 'Verifikasi gagal.');
+        return;
+      }
       var dataUrl = await DH_PAD.exportPng(state.pad, el.canvas);
       var b64 = dataUrl.replace(/^data:image\/png;base64,/, '');
       var data = await DH.post({
         route: 'submit',
         event_id: state.event.event_id,
         type: 'PESERTA',
-        token: state.token,
+        token: vr.token,
         signature_png_b64: b64,
         idempotency_key: state.idempotencyKey,
         attendance_confirmed: true,
@@ -183,42 +204,27 @@
         notice_version: state.notice.version
       });
       if (!data.ok) {
-        if (data.error === 'session_expired') {
-          el.msg.innerHTML = banner('err', 'Sesi berakhir. Pilih nama Anda sekali lagi.');
-          resetSession();
-          return;
-        }
-        el.msg.innerHTML = banner('err', data.message || 'Pengiriman gagal.');
+        el.modalMsg.innerHTML = banner('err', data.message || 'Gagal menyimpan.');
         return;
       }
-      el.msg.innerHTML =
-        banner('ok', 'Tanda tangan terkirim. Kehadiran Anda tercatat.') +
-        '<div class="receipt">' + esc(data.receipt_id) + '</div>';
-      state.signedByNim[state.participant.nim] = {
-        nim: state.participant.nim,
+      state.signedByNim[state.active.nim] = {
+        nim: state.active.nim,
         received_at: data.received_at,
         receipt_id: data.receipt_id
       };
-      el.chkNotice.disabled = true;
-      el.chkHadir.disabled = true;
-      el.btnClear.disabled = true;
-      renderSelect();
-      renderList();
-      loadRoster();
+      el.modalMsg.innerHTML =
+        banner('ok', 'Tanda tangan tersimpan. Baris Anda pada daftar sudah diperbarui.') +
+        '<div class="receipt">' + esc(data.receipt_id) + '</div>';
+      renderTable();
+      loadMissingImages();
+      setTimeout(closeModal, 1600);
+      refresh();
     } catch (e) {
-      el.msg.innerHTML = banner('err', 'Gagal mengirim: ' + esc(e.message) + '. Periksa koneksi lalu coba lagi.');
+      el.modalMsg.innerHTML = banner('err', 'Gagal menyimpan: ' + esc(e.message) + '. Coba lagi.');
     } finally {
       state.busy = false;
-      updateSubmitEnabled();
+      updateSaveEnabled();
     }
-  }
-
-  function resetSession() {
-    state.token = null;
-    state.participant = null;
-    el.select.value = '';
-    el.signCard.classList.add('hidden');
-    renderSelect();
   }
 
   function banner(kind, msg) {

@@ -14,6 +14,8 @@ function doGet(e) {
         return out_({ ok: true, notice: noticePayload_() });
       case 'roster':
         return out_(Object.assign({ ok: true }, rosterPayload_(q.event_id)));
+      case 'sig':
+        return out_(sigImages_(q.event_id, q.nims));
       default:
         return err_('unknown_route', 'Unknown GET route: ' + route);
     }
@@ -106,6 +108,35 @@ function getActiveEvent_(eventId) {
   if (rows.length) return rows[rows.length - 1];
   const all = readAll_('events');
   return all.length ? all[all.length - 1] : null;
+}
+
+// Returns signature images as data URLs for the document-style attendance table.
+function sigImages_(eventId, nimsCsv) {
+  const ev = getActiveEvent_(eventId);
+  if (!ev) return { ok: false, error: 'event_not_found', message: 'Event tidak ditemukan.' };
+  const evId = str_(ev.event_id);
+  const nims = str_(nimsCsv)
+    .split(',')
+    .map(function (s) {
+      return s.trim();
+    })
+    .filter(Boolean)
+    .slice(0, 60);
+  const wanted = {};
+  nims.forEach(function (n) {
+    wanted[n] = true;
+  });
+  const subs = readAll_('submissions').filter(function (r) {
+    return str_(r.event_id) === evId && str_(r.type) === 'PESERTA' && wanted[str_(r.nim)];
+  });
+  const images = {};
+  subs.forEach(function (s) {
+    try {
+      const file = DriveApp.getFileById(str_(s.drive_file_id));
+      images[str_(s.nim)] = 'data:image/png;base64,' + Utilities.base64Encode(file.getBytes());
+    } catch (ignored) {}
+  });
+  return { ok: true, images: images };
 }
 
 function rosterPayload_(eventId) {
