@@ -92,6 +92,8 @@ function apiSubmit_(payload) {
   const receiptId = 'DH-' + (str_(ev.academic_year).replace(/\D/g, '').substring(0, 4) || 'EV') + '-' + randHex_(8).toUpperCase();
   const stored = storeSignature_(ev, receiptId, type, sig.bytes, sig.sha256);
   const receivedAt = nowIso_();
+  const examDate = str_(payload.exam_date).substring(0, 80);
+  const examPlace = str_(payload.exam_place).substring(0, 80);
 
   appendRow_('submissions', {
     receipt_id: receiptId,
@@ -107,7 +109,9 @@ function apiSubmit_(payload) {
     attendance_confirmed: true,
     idempotency_key: str_(payload.idempotency_key) || receiptId,
     received_at: receivedAt,
-    stored_at: receivedAt
+    stored_at: receivedAt,
+    exam_date: examDate,
+    exam_place: examPlace
   });
 
   if (type === 'AUDIENS') {

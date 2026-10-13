@@ -16,7 +16,8 @@ var TABLES = {
   submissions: [
     'receipt_id', 'event_id', 'type', 'nim', 'nama', 'sha256',
     'drive_file_id', 'status', 'notice_version', 'notice_ack',
-    'attendance_confirmed', 'idempotency_key', 'received_at', 'stored_at'
+    'attendance_confirmed', 'idempotency_key', 'received_at', 'stored_at',
+    'exam_date', 'exam_place'
   ],
   sessions: ['token_hash', 'scope', 'ref', 'created_at', 'expires_at'],
   ratelimit: ['key', 'window_start', 'count'],
@@ -32,11 +33,30 @@ function ensureTables_() {
     if (sh.getLastRow() === 0) {
       sh.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight('bold');
       sh.setFrozenRows(1);
+    } else {
+      // Migration: append any new columns missing from an existing sheet.
+      const existing = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String);
+      const missing = headers.filter(function (h) {
+        return existing.indexOf(h) === -1;
+      });
+      if (missing.length) {
+        sh.getRange(1, existing.length + 1, 1, missing.length).setValues([missing]).setFontWeight('bold');
+      }
     }
   });
   const def = ss.getSheetByName('Sheet1');
   if (def && ss.getSheets().length > 1) ss.deleteSheet(def);
   return ss;
+}
+
+// Runs ensureTables_ at most once per cache window (keeps request overhead low).
+function ensureTablesMigrated_() {
+  try {
+    const cache = CacheService.getScriptCache();
+    if (cache.get('tables_ok') === '1') return;
+    ensureTables_();
+    cache.put('tables_ok', '1', 21600);
+  } catch (ignored) {}
 }
 
 function sheet_(name) {

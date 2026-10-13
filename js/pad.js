@@ -51,5 +51,65 @@
     });
   }
 
-  window.DH_PAD = { create: create, resize: resize, exportPng: exportPng };
+  // Turn an uploaded PNG/JPEG into a safe, re-encoded PNG data URL
+  // (strips metadata/EXIF, white background, size-guarded like pad export).
+  function fileToPng(file) {
+    return new Promise(function (resolve, reject) {
+      if (!file) {
+        reject(new Error('Pilih berkas gambar tanda tangan terlebih dahulu.'));
+        return;
+      }
+      if (!/^image\/(png|jpeg|jpg)$/.test(file.type)) {
+        reject(new Error('Berkas harus berupa gambar PNG atau JPG.'));
+        return;
+      }
+      if (file.size > 8 * 1024 * 1024) {
+        reject(new Error('Ukuran berkas maksimal 8 MB.'));
+        return;
+      }
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () {
+        URL.revokeObjectURL(url);
+        try {
+          var dataUrl = encodeOnWhite_(img, 1600);
+          var approx = Math.floor(dataUrl.length * 0.75);
+          var width = 1600;
+          while (approx > MAX_PNG_BYTES && width > 400) {
+            width = Math.floor(width / 2);
+            dataUrl = encodeOnWhite_(img, width);
+            approx = Math.floor(dataUrl.length * 0.75);
+          }
+          if (approx > MAX_PNG_BYTES) {
+            reject(new Error('Gambar terlalu rumit atau besar. Kompres foto atau gunakan tulisan tangan di layar.'));
+            return;
+          }
+          resolve(dataUrl);
+        } catch (e) {
+          reject(new Error('Gagal memproses gambar. Coba gambar lain.'));
+        }
+      };
+      img.onerror = function () {
+        URL.revokeObjectURL(url);
+        reject(new Error('Berkas gambar tidak dapat dibaca.'));
+      };
+      img.src = url;
+    });
+  }
+
+  function encodeOnWhite_(img, maxWidth) {
+    var scale = Math.min(1, maxWidth / (img.width || maxWidth));
+    var w = Math.max(1, Math.round((img.width || maxWidth) * scale));
+    var h = Math.max(1, Math.round((img.height || maxWidth) * scale));
+    var c = document.createElement('canvas');
+    c.width = w;
+    c.height = h;
+    var ctx = c.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, w, h);
+    ctx.drawImage(img, 0, 0, w, h);
+    return c.toDataURL('image/png');
+  }
+
+  window.DH_PAD = { create: create, resize: resize, exportPng: exportPng, fileToPng: fileToPng };
 })();

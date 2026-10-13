@@ -210,6 +210,72 @@ button:disabled {
   margin-top: 4px;
 }
 
+button.small {
+  min-height: 36px;
+  font-size: 0.82rem;
+  padding: 6px 12px;
+  width: auto;
+}
+
+.sig-methods {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+@media (min-width: 640px) {
+  .sig-methods { grid-template-columns: 1.2fr 1fr; }
+}
+
+.sig-method {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: #fafbfc;
+}
+
+.sig-method-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+input[type="file"] {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  font-size: 0.9rem;
+}
+
+.file-preview {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  max-height: 110px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.home-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--navy);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.home-link:hover { background: #eef4fa; }
+
 .banner {
   border-radius: 8px;
   padding: 12px 14px;

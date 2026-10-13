@@ -20,14 +20,89 @@
   </header>
 
   <main>
-    <div class="doc card">
-      <h1 class="doc-title">DAFTAR HADIR PESERTA SEMINAR PROPOSAL SKRIPSI</h1>
-      <div class="doc-sub">PROGRAM STUDI KESEHATAN MASYARAKAT PROGRAM SARJANA</div>
-      <div class="doc-sub">FAKULTAS ILMU KESEHATAN UPN &ldquo;VETERAN&rdquo; JAKARTA</div>
-      <div class="doc-sub">SEMESTER GANJIL T.A. 2026/2027</div>
-      <p class="doc-meta" id="meta-tanggal">Tanggal Ujian: …</p>
-      <p class="doc-meta" id="meta-tempat">Tempat Ujian: …</p>
+    <section id="select-card" class="card" aria-labelledby="select-title">
+      <div class="step-badge">Langkah 1</div>
+      <h1 id="select-title">Pilih Nama Anda</h1>
+      <p class="event-line" id="event-line">Memuat jadwal…</p>
 
+      <label for="nama-select">Nama Peserta</label>
+      <select id="nama-select">
+        <option value="">— Pilih nama Anda —</option>
+      </select>
+      <div id="select-msg" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="form-card" class="card hidden" aria-labelledby="form-title">
+      <div class="step-badge">Langkah 2</div>
+      <h1 id="form-title">Formulir Kehadiran</h1>
+      <div class="identity" id="identity"></div>
+
+      <label for="in-tanggal">Tanggal Ujian</label>
+      <input type="text" id="in-tanggal" maxlength="80" placeholder="Contoh: Kamis, 15 Oktober 2026" autocomplete="off">
+      <div class="sig-hint">Sudah terisi sesuai jadwal — ubah jika tanggal seminar Anda berbeda.</div>
+
+      <label for="in-tempat">Tempat Ujian</label>
+      <input type="text" id="in-tempat" maxlength="80" placeholder="Contoh: Zoom Meeting" autocomplete="off">
+      <div class="sig-hint">Sudah terisi sesuai jadwal — ubah jika tempat seminar Anda berbeda.</div>
+
+      <div class="sig-wrap">
+        <label>Tanda Tangan — pilih salah satu cara</label>
+        <div class="sig-methods">
+          <div class="sig-method">
+            <div class="sig-method-title">A. Tulis di layar</div>
+            <div class="sig-box">
+              <canvas id="sig-canvas" aria-label="Kotak tanda tangan"></canvas>
+            </div>
+            <div class="btn-row">
+              <button type="button" class="secondary small" id="btn-clear">Hapus tulisan</button>
+            </div>
+          </div>
+          <div class="sig-method">
+            <div class="sig-method-title">B. Unggah gambar tanda tangan</div>
+            <input type="file" id="file-input" accept="image/png,image/jpeg">
+            <img id="file-preview" class="file-preview hidden" alt="Pratinjau tanda tangan unggahan">
+            <div class="btn-row">
+              <button type="button" class="secondary small hidden" id="btn-remove-file">Hapus unggahan</button>
+            </div>
+            <div class="sig-hint">Foto tanda tangan di kertas (PNG/JPG, maks 8 MB).</div>
+          </div>
+        </div>
+        <div class="sig-hint" id="sig-source-hint">Belum ada tanda tangan. Tulis di kotak kiri atau unggah gambar.</div>
+      </div>
+
+      <label>Pernyataan</label>
+      <p>
+        <a href="privacy.html" target="_blank" rel="noopener">Baca pemberitahuan privasi lengkap</a>
+        (versi <span id="notice-version">—</span>).
+      </p>
+      <div class="check">
+        <input type="checkbox" id="chk-notice">
+        <label for="chk-notice" style="margin:0;font-weight:400">Saya menyatakan telah membaca Pemberitahuan Privasi tersebut.</label>
+      </div>
+      <div class="check">
+        <input type="checkbox" id="chk-hadir">
+        <label for="chk-hadir" style="margin:0;font-weight:400">Saya hadir pada Seminar Proposal Skripsi ini dan tanda tangan yang saya buat adalah milik saya sendiri.</label>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="secondary" id="btn-back">Pilih Nama Lain</button>
+        <button type="button" id="btn-submit" disabled>Kirim Tanda Tangan</button>
+      </div>
+      <div id="submit-msg" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="done-card" class="card hidden" aria-labelledby="done-title">
+      <div class="step-badge">Langkah 3</div>
+      <h1 id="done-title">Kehadiran Tercatat</h1>
+      <div id="done-body"></div>
+      <div class="btn-row">
+        <button type="button" class="secondary" id="btn-again">Tanda Tangan Peserta Lain</button>
+        <a class="home-link" href="index.html">Kembali ke Beranda</a>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="list-title">
+      <h2 id="list-title">Daftar Kehadiran <span id="list-updated" class="sig-hint"></span></h2>
       <div class="table-scroll">
         <table class="data doc-table" id="tbl-doc">
           <thead>
@@ -36,44 +111,9 @@
           <tbody></tbody>
         </table>
       </div>
-
-      <p class="sig-hint">
-        Temukan baris Anda, lalu klik tombol <strong>Tanda tangan</strong> pada kolom TANDA TANGAN.
-        Tulis tanda tangan langsung di layar (jari/stylus) lalu simpan. Daftar diperbarui otomatis.
-      </p>
-    </div>
+      <p class="sig-hint">Daftar ini diperbarui otomatis setiap 30 detik.</p>
+    </section>
   </main>
-
-  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-box">
-      <h2 id="modal-title">Tanda Tangan</h2>
-      <div class="identity" id="modal-identity"></div>
-
-      <label for="modal-nim">Konfirmasi NIM Anda</label>
-      <input type="text" id="modal-nim" inputmode="numeric" autocomplete="off" maxlength="20" placeholder="Masukkan NIM sesuai baris Anda">
-
-      <div class="check">
-        <input type="checkbox" id="chk-notice">
-        <label for="chk-notice" style="margin:0;font-weight:400">Saya telah membaca <a href="privacy.html" target="_blank" rel="noopener">Pemberitahuan Privasi</a> (versi <span id="notice-version">—</span>).</label>
-      </div>
-      <div class="check">
-        <input type="checkbox" id="chk-hadir">
-        <label for="chk-hadir" style="margin:0;font-weight:400">Saya hadir pada Seminar Proposal Skripsi ini dan tanda tangan yang saya buat adalah milik saya sendiri.</label>
-      </div>
-
-      <div class="sig-box">
-        <canvas id="sig-canvas" aria-label="Kotak tanda tangan"></canvas>
-      </div>
-      <p class="sig-hint">Tulis tanda tangan Anda di kotak putih di atas. Tidak perlu mengunggah berkas.</p>
-
-      <div class="btn-row">
-        <button type="button" class="secondary" id="btn-clear">Hapus</button>
-        <button type="button" id="btn-save" disabled>Simpan Tanda Tangan</button>
-        <button type="button" class="secondary" id="btn-close">Tutup</button>
-      </div>
-      <div id="modal-msg" role="status" aria-live="polite"></div>
-    </div>
-  </div>
 
   <footer class="site-footer">
     <div>Tanda tangan disimpan pada Google Drive institusi. GitHub tidak menyimpan data peserta.</div>

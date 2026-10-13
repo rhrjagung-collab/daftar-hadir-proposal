@@ -58,13 +58,16 @@ function buildDaftarHadirDoc_(ev, docType, nim) {
   addCenteredHeader_(body, 'SEMESTER ' + str_(ev.semester) + ' T.A. ' + str_(ev.academic_year));
   body.appendParagraph('');
 
-  if (docType === 'PESERTA_ONE' || docType === 'PESERTA_ALL') {
-    body.appendParagraph('Tanggal Ujian: ' + str_(ev.exam_date_label)).setFontFamily(TNR).setFontSize(11);
-    body.appendParagraph('Tempat Ujian: ' + str_(ev.exam_place)).setFontFamily(TNR).setFontSize(11);
-  } else {
-    body.appendParagraph('Tanggal Ujian: ' + str_(ev.exam_date_label)).setFontFamily(TNR).setFontSize(11);
-    body.appendParagraph('Tempat Ujian: ' + str_(ev.exam_place)).setFontFamily(TNR).setFontSize(11);
+  // PESERTA_ONE uses the date/place the participant typed when signing (fallback: event defaults).
+  let examDateLabel = str_(ev.exam_date_label);
+  let examPlace = str_(ev.exam_place);
+  if (docType === 'PESERTA_ONE' && single) {
+    const mySub = sigByNimType[single.nim + '|PESERTA'];
+    if (mySub && str_(mySub.exam_date)) examDateLabel = str_(mySub.exam_date);
+    if (mySub && str_(mySub.exam_place)) examPlace = str_(mySub.exam_place);
   }
+  body.appendParagraph('Tanggal Ujian: ' + examDateLabel).setFontFamily(TNR).setFontSize(11);
+  body.appendParagraph('Tempat Ujian: ' + examPlace).setFontFamily(TNR).setFontSize(11);
   if (docType === 'PESERTA_ONE') {
     body.appendParagraph('Nama Peserta: ' + str_(single.nama)).setFontFamily(TNR).setFontSize(11);
     body.appendParagraph('NIM Peserta: ' + str_(single.nim)).setFontFamily(TNR).setFontSize(11);
@@ -129,7 +132,7 @@ function buildDaftarHadirDoc_(ev, docType, nim) {
 
   body.appendParagraph('');
   body.appendParagraph('');
-  body.appendParagraph('        Jakarta, ' + str_(ev.exam_date_label).replace(/^[A-Za-z]+,\s*/, ''))
+  body.appendParagraph('        Jakarta, ' + examDateLabel.replace(/^[A-Za-z]+,\s*/, ''))
     .setFontFamily(TNR)
     .setFontSize(11);
   body.appendParagraph('        Tanda Tangan                                   Nama Penguji:').setFontFamily(TNR).setFontSize(11);

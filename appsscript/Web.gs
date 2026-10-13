@@ -4,6 +4,7 @@
 
 function doGet(e) {
   try {
+    ensureTablesMigrated_();
     maybeCleanupSessions_();
     const route = str_(e && e.parameter && e.parameter.route);
     const q = (e && e.parameter) || {};
@@ -16,6 +17,8 @@ function doGet(e) {
         return out_(Object.assign({ ok: true }, rosterPayload_(q.event_id)));
       case 'sig':
         return out_(sigImages_(q.event_id, q.nims));
+      case 'audiens_list':
+        return out_(audiensList_(q.event_id));
       default:
         return err_('unknown_route', 'Unknown GET route: ' + route);
     }
@@ -27,6 +30,7 @@ function doGet(e) {
 function doPost(e) {
   let payload = {};
   try {
+    ensureTablesMigrated_();
     maybeCleanupSessions_();
     let raw = '';
     if (e && e.postData && e.postData.contents) raw = e.postData.contents;
@@ -137,6 +141,24 @@ function sigImages_(eventId, nimsCsv) {
     } catch (ignored) {}
   });
   return { ok: true, images: images };
+}
+
+// Public audiens list for the audiens page (names + times only; no signature images).
+function audiensList_(eventId) {
+  const ev = getActiveEvent_(eventId);
+  if (!ev) return { ok: false, error: 'event_not_found', message: 'Event tidak ditemukan.' };
+  const evId = str_(ev.event_id);
+  const audiens = readAll_('audiens')
+    .filter(function (r) {
+      return str_(r.event_id) === evId;
+    })
+    .map(function (r) {
+      return { no: r.no, nim: str_(r.nim), nama: str_(r.nama), received_at: str_(r.received_at) };
+    })
+    .sort(function (a, b) {
+      return Number(a.no) - Number(b.no);
+    });
+  return { ok: true, event: publicEvent_(ev), audiens: audiens, notice: noticePayload_() };
 }
 
 function rosterPayload_(eventId) {

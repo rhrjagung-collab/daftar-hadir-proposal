@@ -20,9 +20,9 @@
   </header>
 
   <main>
-    <section id="step-form" class="card" aria-labelledby="form-title">
-      <div class="step-badge">Langkah 1 dari 2</div>
-      <h1 id="form-title">Identitas Audiens</h1>
+    <section id="form-card" class="card" aria-labelledby="form-title">
+      <div class="step-badge">Langkah 1</div>
+      <h1 id="form-title">Formulir Kehadiran Audiens</h1>
       <p class="event-line" id="event-line">Memuat jadwal…</p>
 
       <label for="nim-input">NIM</label>
@@ -31,44 +31,80 @@
       <label for="nama-input">Nama Lengkap (sesuai kartu mahasiswa)</label>
       <input type="text" id="nama-input" autocomplete="name" maxlength="120" placeholder="Nama lengkap">
 
-      <label>Pemberitahuan Privasi</label>
+      <label for="in-tanggal">Tanggal Ujian</label>
+      <input type="text" id="in-tanggal" maxlength="80" placeholder="Contoh: Kamis, 15 Oktober 2026" autocomplete="off">
+      <div class="sig-hint">Sudah terisi sesuai jadwal — ubah jika tanggal seminar yang Anda ikuti berbeda.</div>
+
+      <label for="in-tempat">Tempat Ujian</label>
+      <input type="text" id="in-tempat" maxlength="80" placeholder="Contoh: Zoom Meeting" autocomplete="off">
+      <div class="sig-hint">Sudah terisi sesuai jadwal — ubah jika tempat seminar yang Anda ikuti berbeda.</div>
+
+      <div class="sig-wrap">
+        <label>Tanda Tangan — pilih salah satu cara</label>
+        <div class="sig-methods">
+          <div class="sig-method">
+            <div class="sig-method-title">A. Tulis di layar</div>
+            <div class="sig-box">
+              <canvas id="sig-canvas" aria-label="Kotak tanda tangan"></canvas>
+            </div>
+            <div class="btn-row">
+              <button type="button" class="secondary small" id="btn-clear">Hapus tulisan</button>
+            </div>
+          </div>
+          <div class="sig-method">
+            <div class="sig-method-title">B. Unggah gambar tanda tangan</div>
+            <input type="file" id="file-input" accept="image/png,image/jpeg">
+            <img id="file-preview" class="file-preview hidden" alt="Pratinjau tanda tangan unggahan">
+            <div class="btn-row">
+              <button type="button" class="secondary small hidden" id="btn-remove-file">Hapus unggahan</button>
+            </div>
+            <div class="sig-hint">Foto tanda tangan di kertas (PNG/JPG, maks 8 MB).</div>
+          </div>
+        </div>
+        <div class="sig-hint" id="sig-source-hint">Belum ada tanda tangan. Tulis di kotak kiri atau unggah gambar.</div>
+      </div>
+
+      <label>Pernyataan</label>
       <p>
         <a href="privacy.html" target="_blank" rel="noopener">Baca pemberitahuan privasi lengkap</a>
         (versi <span id="notice-version">—</span>).
       </p>
-
       <div class="check">
         <input type="checkbox" id="chk-notice">
         <label for="chk-notice" style="margin:0;font-weight:400">Saya menyatakan telah membaca Pemberitahuan Privasi tersebut.</label>
       </div>
       <div class="check">
         <input type="checkbox" id="chk-hadir">
-        <label for="chk-hadir" style="margin:0;font-weight:400">Saya menyatakan bahwa saya hadir sebagai audiens pada Seminar Proposal Skripsi ini dan tanda tangan yang saya buat adalah milik saya sendiri.</label>
+        <label for="chk-hadir" style="margin:0;font-weight:400">Saya hadir sebagai audiens pada Seminar Proposal Skripsi ini dan tanda tangan yang saya buat adalah milik saya sendiri.</label>
       </div>
 
-      <div class="sig-wrap">
-        <label id="sig-label">Tanda Tangan</label>
-        <div class="sig-box">
-          <canvas id="sig-canvas" aria-labelledby="sig-label"></canvas>
-        </div>
-        <div class="sig-hint">Gunakan jari atau stylus. Area tanda tangan rasio 2:1.</div>
-        <div class="btn-row">
-          <button type="button" class="secondary" id="btn-clear">Hapus</button>
-          <button type="button" id="btn-submit" disabled>Kirim Tanda Tangan</button>
-        </div>
+      <div class="btn-row">
+        <button type="button" id="btn-submit" disabled>Kirim Tanda Tangan</button>
       </div>
       <div id="submit-msg" role="status" aria-live="polite"></div>
     </section>
 
-    <section id="step-done" class="card hidden" aria-labelledby="done-title">
-      <div class="step-badge">Langkah 2 dari 2</div>
+    <section id="done-card" class="card hidden" aria-labelledby="done-title">
+      <div class="step-badge">Langkah 2</div>
       <h1 id="done-title">Kehadiran Audiens Tercatat</h1>
       <div id="done-body"></div>
       <div class="btn-row">
-        <a class="home-card" href="index.html" style="border-top-color:var(--navy);text-align:center">
-          <strong>Kembali ke Beranda</strong>
-        </a>
+        <button type="button" class="secondary" id="btn-again">Daftar Audiens Lain</button>
+        <a class="home-link" href="index.html">Kembali ke Beranda</a>
       </div>
+    </section>
+
+    <section class="card" aria-labelledby="list-title">
+      <h2 id="list-title">Daftar Audiens <span id="list-updated" class="sig-hint"></span></h2>
+      <div class="table-scroll">
+        <table class="data doc-table" id="tbl-audiens">
+          <thead>
+            <tr><th>NO</th><th>NAMA MAHASISWA</th><th>NIM</th><th>WAKTU DAFTAR</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="sig-hint">Daftar ini diperbarui otomatis setiap 30 detik.</p>
     </section>
   </main>
 
