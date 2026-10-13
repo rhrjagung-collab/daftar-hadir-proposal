@@ -168,9 +168,19 @@ function buildDaftarHadirDoc_(ev, docType, nim) {
   outFolder.addFile(docFile);
   root.removeFile(docFile);
 
-  // Built-in DriveApp export: Google Doc → .docx (no Advanced Drive service needed).
-  const blob = docFile.getAs(DOCX_MIME);
-  const docxFile = outFolder.createFile(blob.setName(title + '.docx'));
+  // Export Google Doc → .docx via Drive REST (no Advanced Drive service needed).
+  // DriveApp.getAs() does not support this conversion; Files.export does, via plain HTTPS.
+  const exportUrl =
+    'https://www.googleapis.com/drive/v3/files/' + doc.getId() + '/export?mimeType=' + encodeURIComponent(DOCX_MIME);
+  const resp = UrlFetchApp.fetch(exportUrl, {
+    headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() },
+    muteHttpExceptions: true
+  });
+  if (resp.getResponseCode() !== 200) {
+    throw new Error('Export docx gagal HTTP ' + resp.getResponseCode() + ': ' + resp.getContentText().substring(0, 200));
+  }
+  const blob = resp.getBlob().setName(title + '.docx');
+  const docxFile = outFolder.createFile(blob);
 
   return { file_id: docxFile.getId(), file_url: docxFile.getUrl(), title: title, doc_url: docFile.getUrl() };
 }
