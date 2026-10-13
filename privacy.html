@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pemberitahuan Privasi — Daftar Hadir Seminar Proposal Skripsi</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">PEMBERITAHUAN PRIVASI</div>
+    <div class="sub">Program Studi Kesehatan Masyarakat — Program Sarjana<br>Fakultas Ilmu Kesehatan UPN "Veteran" Jakarta</div>
+    <nav class="site-nav" aria-label="Navigasi utama">
+      <a href="index.html">Beranda</a>
+      <a href="peserta.html">Peserta</a>
+      <a href="audiens.html">Audiens</a>
+      <a href="admin.html">Petugas</a>
+      <a href="privacy.html" aria-current="page">Privasi</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1>Pemberitahuan Privasi Pemrosesan Data Daftar Hadir</h1>
+      <p class="event-line">Versi PN-2026-10-01 — salinan statis; teks yang mengikat adalah versi yang disajikan backend saat pengisian.</p>
+      <div class="notice-text">Pemberitahuan Privasi Pemrosesan Data Daftar Hadir (versi PN-2026-10-01)
+
+1. Pengendali data: Program Studi Kesehatan Masyarakat, Program Sarjana, Fakultas Ilmu Kesehatan, UPN "Veteran" Jakarta.
+2. Data yang dikumpulkan: nama, NIM, gambar tanda tangan (raster PNG), waktu pengisian, dan status kehadiran.
+3. Tujuan pemrosesan: pembukuan kehadiran peserta Seminar Proposal Skripsi dan penyusunan berita acara/daftar hadir resmi.
+4. Dasar pemrosesan: kepentingan sah penyelenggara serta kewajiban akademik penyelenggaraan seminar (dikonfigurasi pengendali data; bukan semata-mata persetujuan).
+5. Penyimpanan: berkas tanda tangan disimpan pada Google Drive institusi; metadata pada lembar kerja Google milik prodi. Berkas TIDAK disimpan pada GitHub.
+6. Retensi: disimpan selama diperlukan sesuai kebijakan akademik prodi; atas permintaan subjek data dapat dilakukan akses, koreksi, atau penghapusan melalui Koordinator Program Studi.
+7. Hak subjek data sebagaimana UU No. 27 Tahun 2022 tentang Perlindungan Data Pribadi dapat diajukan kepada Koordinator Program Studi.
+8. Tanda tangan yang dikumpulkan adalah gambar raster sebagai tanda kehadiran, BUKAN tanda tangan elektronik tersertifikasi (PSrE).
+9. Karakteristik dinamis pena (tekanan, kecepatan, timing) TIDAK disimpan.
+10. Kontak: Koordinator Program Studi Kesehatan Masyarakat Program Sarjana.</div>
+
+      <h2 style="margin-top:18px">Pernyataan Kehadiran</h2>
+      <p>Saya menyatakan bahwa saya hadir pada Seminar Proposal Skripsi ini dan tanda tangan yang saya buat adalah milik saya sendiri.</p>
+
+      <h2 style="margin-top:18px">Catatan teknis</h2>
+      <ul>
+        <li>Antarmuka disajikan melalui GitHub Pages (tanpa data peserta di dalam berkas situs).</li>
+        <li>Pengiriman tanda tangan berjalan langsung ke backend Google Apps Script, yang menulis ke Google Drive institusi.</li>
+        <li>Tanda tangan disimpan sebagai gambar PNG hasil render kanvas (raster), tanpa metadata EXIF dan tanpa data dinamis pena.</li>
+        <li>Integritas berkas dicatat sebagai hash SHA-256 pada lembar metadata.</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>Hubungi Koordinator Program Studi untuk permintaan akses, koreksi, atau penghapusan data.</div>
+  </footer>
+</body>
+</html>

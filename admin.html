@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Petugas — Daftar Hadir Seminar Proposal Skripsi</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">PANEL PETUGAS DAFTAR HADIR</div>
+    <div class="sub">Program Studi Kesehatan Masyarakat — Program Sarjana<br>Fakultas Ilmu Kesehatan UPN "Veteran" Jakarta</div>
+    <nav class="site-nav" aria-label="Navigasi utama">
+      <a href="index.html">Beranda</a>
+      <a href="peserta.html">Peserta</a>
+      <a href="audiens.html">Audiens</a>
+      <a href="admin.html" aria-current="page">Petugas</a>
+      <a href="privacy.html">Privasi</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="login-card" class="card" aria-labelledby="login-title">
+      <h1 id="login-title">Login Petugas</h1>
+      <p class="event-line">Gunakan kunci admin dari script property <code>ADMIN_KEY</code> (dibuat saat <code>setup()</code>).</p>
+      <label for="admin-key">Kunci Admin</label>
+      <input type="password" id="admin-key" autocomplete="off" maxlength="64">
+      <div class="btn-row">
+        <button type="button" id="btn-login">Masuk</button>
+      </div>
+      <div id="login-msg" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="dash-card" class="card hidden" aria-labelledby="dash-title">
+      <h1 id="dash-title">Status Kehadiran</h1>
+      <p class="event-line" id="event-line"></p>
+
+      <div class="stats">
+        <div class="stat"><div class="num" id="stat-total">–</div><div class="lbl">Total Peserta</div></div>
+        <div class="stat"><div class="num" id="stat-hadir">–</div><div class="lbl">Peserta Hadir</div></div>
+        <div class="stat"><div class="num" id="stat-audiens">–</div><div class="lbl">Audiens</div></div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="secondary" id="btn-refresh">Segarkan</button>
+        <button type="button" id="btn-export-peserta">Unduh .docx Daftar Hadir Peserta</button>
+        <button type="button" id="btn-export-audiens">Unduh .docx Daftar Hadir Audiens</button>
+        <a id="link-drive" class="home-card" href="#" target="_blank" rel="noopener" style="border-top-color:var(--navy);padding:10px 14px">
+          <strong style="font-size:0.9rem">Folder Drive</strong>
+        </a>
+      </div>
+      <div id="export-msg" role="status" aria-live="polite"></div>
+
+      <h2 style="margin-top:18px">Peserta</h2>
+      <div class="table-scroll">
+        <table class="data" id="tbl-peserta">
+          <thead>
+            <tr><th>No</th><th>Nama</th><th>NIM</th><th>Status</th><th>Waktu</th><th>Receipt</th><th>Dokumen</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <h2 style="margin-top:18px">Audiens</h2>
+      <div class="table-scroll">
+        <table class="data" id="tbl-audiens">
+          <thead>
+            <tr><th>No</th><th>Nama</th><th>NIM</th><th>Waktu</th><th>Receipt</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>Panel ini membutuhkan kunci admin. Aksi admin dicatat pada lembar audit.</div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

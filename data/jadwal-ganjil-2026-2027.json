@@ -1,0 +1,247 @@
+{
+  "source": "Penguji Proposal Skripsi Ganjil 26 27_shared.pdf",
+  "event": {
+    "event_id": "EVT-2026G-PROPOSAL",
+    "name": "Seminar Proposal Skripsi",
+    "academic_year": "2026/2027",
+    "semester": "GANJIL",
+    "program": "PROGRAM STUDI KESEHATAN MASYARAKAT PROGRAM SARJANA",
+    "faculty": "FAKULTAS ILMU KESEHATAN UPN \"VETERAN\" JAKARTA",
+    "exam_date_label": "Kamis, 15 Oktober 2026",
+    "exam_place": "Zoom Meeting",
+    "timezone": "Asia/Jakarta"
+  },
+  "penguji_mapping": {
+    "Penguji I/Ketua Penguji": "penguji_utama",
+    "Penguji II/Anggota Penguji": "pembimbing",
+    "Penguji III/Anggota Penguji": "pendamping",
+    "note": "Verified against DAFTAR HADIR.docx row for NIM 2310713062 (Saffana Urfa Setiawan)"
+  },
+  "peserta": [
+    {
+      "no": 1,
+      "nim": "2210713073",
+      "nama": "Almeria Annisa Putri",
+      "peminatan": "Administrasi & Kebijakan Kesehatan (2022)",
+      "judul": "Faktor-Faktor yang berhubungan dengan Kesediaan Mengikuti Program Rujuk Balik (PRB) pada Pasien Diabetes Melitus Tipe 2 Peserta JKN di Poli Penyakit dalam RSUD Tanggerang Selatan Tahun 2026",
+      "pembimbing": "Dr. Putri Permatasari, S.K.M., M.K.M. (L)",
+      "pendamping": "Cahya Arbitera, S.K.M., M.K.M. (L)",
+      "penguji_utama": "Ayu Anggraeni Dyah Purbasari, S.K.M., MPH(M) (L)"
+    },
+    {
+      "no": 2,
+      "nim": "2210713132",
+      "nama": "Alinda Mahardika Alba",
+      "peminatan": "Administrasi & Kebijakan Kesehatan (2022)",
+      "judul": "HUBUNGAN KUALITAS APLIKASI MOBILE JKN PADA LAYANAN PENDAFTARAN ONLINE TERHADAP KEPUASAN PASIEN RAWAT JALAN DI RS SUMBER WARAS TAHUN 2026",
+      "pembimbing": "Prof. Dr. A. Heri Iswanto, S.K.M., M.A.R.S. (LK)",
+      "pendamping": "Ayu Anggraeni Dyah Purbasari, S.K.M., MPH(M) (L)",
+      "penguji_utama": "Dr. Hj. Een Kurnaesih, S.K.M., M.Kes. (LK)"
+    },
+    {
+      "no": 3,
+      "nim": "2210713008",
+      "nama": "Winda Dwiastuti",
+      "peminatan": "Administrasi & Kebijakan Kesehatan (2022)",
+      "judul": "Hubungan Kualitas Pelayanan Pendaftaran Online berbasis Whatsapp dengan Minat Kunjungan Ulang Pasien Umum di Instalasi Rawat Jalan RSPPN Soedirman Tahun 2026",
+      "pembimbing": "Prof. Dr. A. Heri Iswanto, S.K.M., M.A.R.S. (LK)",
+      "pendamping": "Dr. Putri Permatasari, S.K.M., M.K.M. (L)",
+      "penguji_utama": "Apt. Riswandy Wasir, M.P.H., PhD (L)"
+    },
+    {
+      "no": 4,
+      "nim": "2310713089",
+      "nama": "Raeesah Wahlullizar",
+      "peminatan": "Administrasi & Kebijakan Kesehatan (2023)",
+      "judul": "Evaluasi Ketercapaian Target Universal Health Coverage Melalui Optimalisasi Program Jaminan Kesehatan Nasional di Kota Tangerang Selatan Tahun 2026",
+      "pembimbing": "Apt. Riswandy Wasir, M.P.H., PhD (L)",
+      "pendamping": "Cahya Arbitera, S.K.M., M.K.M. (L)",
+      "penguji_utama": "Dr. Putri Permatasari, S.K.M., M.K.M. (L)"
+    },
+    {
+      "no": 5,
+      "nim": "2310713082",
+      "nama": "Nirna Dwi Anggraini",
+      "peminatan": "Administrasi & Kebijakan Kesehatan (2023)",
+      "judul": "Faktor-Faktor yang Berhubungan dengan Tingkat Pemanfaatan Aplikasi Mobile JKN pada Peserta JKN Rawat Jalan di Puskesmas Kecamatan Pasar Minggu Tahun 2026",
+      "pembimbing": "Ayu Anggraeni Dyah Purbasari, S.K.M., MPH(M) (L)",
+      "pendamping": "Apt. Riswandy Wasir, M.P.H., PhD (L)",
+      "penguji_utama": "Cahya Arbitera, S.K.M., M.K.M. (L)"
+    },
+    {
+      "no": 6,
+      "nim": "2310713091",
+      "nama": "Nadya Nur Syafina Putri",
+      "peminatan": "Administrasi & Kebijakan Kesehatan (2023)",
+      "judul": "ANALISIS FAKTOR-FAKTOR YANG BERHUBUNGAN DENGAN IMPLEMENTASI KEBIJAKAN KAWASAN TANPA ROKOK (KTR) PADA SMA DAN SMK DI KECAMATAN CIPAYUNG KOTA DEPOK TAHUN 2026",
+      "pembimbing": "Dr. Hj. Een Kurnaesih, S.K.M., M.Kes. (LK)",
+      "pendamping": "Dr. Putri Permatasari, S.K.M., M.K.M. (L)",
+      "penguji_utama": "Cahya Arbitera, S.K.M., M.K.M. (L)"
+    },
+    {
+      "no": 7,
+      "nim": "2310713107",
+      "nama": "Aditya Ibnu Gunawan",
+      "peminatan": "Kesehatan Lingkungan (2023)",
+      "judul": "Hubungan Higiene Perorangan, Sanitasi Lingkungan, dan Faktor Individu Terhadap Kejadian Skabies Klinis Pada Anak Di Panti Asuhan di Jakarta Timur 2026",
+      "pembimbing": "Nayla Kamilia Fithri, S.K.M., M.P.H. (L)",
+      "pendamping": "Arga Buntara, S.K.M., M.P.H. (AA)",
+      "penguji_utama": "Dr. Fajaria Nurcandra, S.K.M., M.Epid. (L)"
+    },
+    {
+      "no": 8,
+      "nim": "2310713079",
+      "nama": "Mazaya Fazila Syahira",
+      "peminatan": "Kesehatan Reproduksi (2023)",
+      "judul": "HUBUNGAN STRES AKADEMIK DENGAN GANGGUAN SIKLUS MENSTRUASI PADA MAHASISWI PROGRAM SARJANA KESEHATAN MASYARAKAT DI UNIVERSITAS PEMBANGUNAN \"VETERAN\" JAKARTA TAHUN 2026",
+      "pembimbing": "Chahya Kharin Herbawani, S.Keb., Bd., M.K.M. (L)",
+      "pendamping": "Dr. Laily Hanifah, S.K.M., M.Kes. (L)",
+      "penguji_utama": "Dr. Fathinah Ranggauni Hardy, S.K.M., M.Epid. (L)"
+    },
+    {
+      "no": 9,
+      "nim": "2310713158",
+      "nama": "Azzahra Athyahanna Harahap",
+      "peminatan": "Kesehatan Reproduksi (2023)",
+      "judul": "HUBUNGAN FAKTOR INDIVIDU, PENDIDIKAN IBU, DAN FASILITAS WASH DENGAN MENSTRUAL HYGIENE MANAGEMENT PADA SISWI SMP NEGERI DI KOTA DEPOK TAHUN 2026",
+      "pembimbing": "Chahya Kharin Herbawani, S.Keb., Bd., M.K.M. (L)",
+      "pendamping": "Dr. Lusyta Puri Ardhiyanti, S.ST., M.Kes. (L)",
+      "penguji_utama": "Dr. Hj. Een Kurnaesih, S.K.M., M.Kes. (LK)"
+    },
+    {
+      "no": 10,
+      "nim": "2310713090",
+      "nama": "Seftiani Syafira",
+      "peminatan": "Kesehatan Reproduksi (2023)",
+      "judul": "Determinan dalam Perilaku Pemanfaatan Pelayanan Kesehatan Peduli Remaja (PKPR) di Kota Depok Tahun 2026",
+      "pembimbing": "Dr. Fathinah Ranggauni Hardy, S.K.M., M.Epid. (L)",
+      "pendamping": "Dr. Yunita Amraeni, S.K.M., M.Kes. (L)",
+      "penguji_utama": "Dr. Chandrayani Simanjorang, S.K.M., M.Epid. (LK)"
+    },
+    {
+      "no": 11,
+      "nim": "2310713159",
+      "nama": "Salsa Cahya Amira",
+      "peminatan": "Kesehatan Reproduksi (2023)",
+      "judul": "Hubungan Pola Asuh Orang Tua dengan Komunikasi Kesehatan Reproduksi pada Remaja di SMA Negeri 37 Jakarta",
+      "pembimbing": "Dr. Lusyta Puri Ardhiyanti, S.ST., M.Kes. (L)",
+      "pendamping": "Dr. Laily Hanifah, S.K.M., M.Kes. (L)",
+      "penguji_utama": "Chahya Kharin Herbawani, S.Keb., Bd., M.K.M. (L)"
+    },
+    {
+      "no": 12,
+      "nim": "2310713100",
+      "nama": "Salwa Febriana Ekasari Siregar",
+      "peminatan": "Kesehatan Reproduksi (2023)",
+      "judul": "FAKTOR-FAKTOR YANG BERHUBUNGAN DENGAN NIAT VASEKTOMI PADA PRIA USIA 18-25 TAHUN DI JABODETABEK TAHUN 2026",
+      "pembimbing": "Dr. Fajaria Nurcandra, S.K.M., M.Epid. (L)",
+      "pendamping": "Dr. Fathinah Ranggauni Hardy, S.K.M., M.Epid. (L)",
+      "penguji_utama": "Dr. Yunita Amraeni, S.K.M., M.Kes. (L)"
+    },
+    {
+      "no": 13,
+      "nim": "2310713111",
+      "nama": "Maritza Adelia Putri",
+      "peminatan": "Kesehatan Reproduksi (2023)",
+      "judul": "Analisis Cakupan Skrining Anemia pada Remaja Putri melalui Program Cek Kesehatan Gratis (CKG) Sekolah di Wilayah Kerja Puskesmas Sawangan Tahun 2026",
+      "pembimbing": "Dr. Yunita Amraeni, S.K.M., M.Kes. (L)",
+      "pendamping": "Dr. Fajaria Nurcandra, S.K.M., M.Epid. (L)",
+      "penguji_utama": "Dr. Fathinah Ranggauni Hardy, S.K.M., M.Epid. (L)"
+    },
+    {
+      "no": 14,
+      "nim": "2310713123",
+      "nama": "Rizkiana Putrika Maharani",
+      "peminatan": "Kesehatan Reproduksi (2023)",
+      "judul": "PENGALAMAN MAHASISWI TERHADAP KETIMPANGAN RELASI KUASA DALAM HUBUNGAN PACARAN DAN KERENTANANNYA TERHADAP KEKERASAN SEKSUAL DI UNIVERSITAS PEMBANGUNAN NASIONAL \"VETERAN\" JAKARTA",
+      "pembimbing": "Dr. Laily Hanifah, S.K.M., M.Kes. (L)",
+      "pendamping": "Dr. Lusyta Puri Ardhiyanti, S.ST., M.Kes. (L)",
+      "penguji_utama": "Chahya Kharin Herbawani, S.Keb., Bd., M.K.M. (L)"
+    },
+    {
+      "no": 15,
+      "nim": "2310713084",
+      "nama": "Keira Dwinova",
+      "peminatan": "Keselamatan & Kesehatan Kerja (2023)",
+      "judul": "HUBUNGAN FAKTOR INDIVIDU DAN FAKTOR PEKERJAAN DENGAN KELELAHAN KERJA PADA PEKERJA DI PT X TAHUN 2026",
+      "pembimbing": "Ulya Qoulan Karima, S.K.M., M.Epid. (L)",
+      "pendamping": "Afif Amir Amrullah, S.Kp., M.K.K.K. (L)",
+      "penguji_utama": "Dr. Januar Ariyanto, S.K.M., M.Kes. (L)"
+    },
+    {
+      "no": 16,
+      "nim": "2310713062",
+      "nama": "Saffana Urfa Setiawan",
+      "peminatan": "Keselamatan & Kesehatan Kerja (2023)",
+      "judul": "ANALISIS IMPLEMENTASI CRISIS MANAGEMENT EMERGENCY RESPONSE (CMER) DI PERUSAHAAN X PADA TAHUN 2026",
+      "pembimbing": "Dr. Suparni, S.T., M.K.K.K. (L)",
+      "pendamping": "Agung Raharjo, S.K.M., M.K.K.K",
+      "penguji_utama": "Dr. Agus Joko Susanto, S.K.M., M.K.K.K. (L)"
+    },
+    {
+      "no": 17,
+      "nim": "2310713108",
+      "nama": "Adzra Nabilah Widyatama",
+      "peminatan": "Keselamatan & Kesehatan Kerja (2023)",
+      "judul": "HUBUNGAN PERSENTASE LEMAK TUBUH DENGAN KEJADIAN GEJALA HEAT STRESS PADA PEKERJA KONSTRUKSI DI PT. X TAHUN 2026",
+      "pembimbing": "Dr. Ns. Dyah Utari, S.Kep., M.K.K.K. (LK)",
+      "pendamping": "Agung Raharjo, S.K.M., M.K.K.K (AA)",
+      "penguji_utama": "Dr. Suparni, S.T., M.K.K.K. (L)"
+    },
+    {
+      "no": 18,
+      "nim": "2310713099",
+      "nama": "Ghaida Ramadhani",
+      "peminatan": "Keselamatan & Kesehatan Kerja (2023)",
+      "judul": "HUBUNGAN PERILAKU SEDENTARY DENGAN RISIKO COMPUTER VISION SYNDROME PADA KARYAWAN PT X TAHUN 2026",
+      "pembimbing": "Dr. Januar Ariyanto, S.K.M., M.Kes. (L)",
+      "pendamping": "Promisetyaningrum Fitria Nurani, S.K.M., M.P.H. (AA)",
+      "penguji_utama": "Dr. Ns. Dyah Utari, S.Kep., M.K.K.K. (LK)"
+    },
+    {
+      "no": 19,
+      "nim": "2310713027",
+      "nama": "Faiza Athallah",
+      "peminatan": "Keselamatan & Kesehatan Kerja (2023)",
+      "judul": "ANALISIS FAKTOR TEKANAN WAKTU KERJA TERHADAP SAFETY BEHAVIOR PADA PEKERJA PENGGUNA MATERIAL HANDLING EQUIPMENT DI PT X TAHUN 2026",
+      "pembimbing": "Afif Amir Amrullah, S.Kp., M.K.K.K. (L)",
+      "pendamping": "Farahul Jannah, S.Kep., M.K.K.K. (AA)",
+      "penguji_utama": "Dr. Agus Joko Susanto, S.K.M., M.K.K.K. (L)"
+    },
+    {
+      "no": 20,
+      "nim": "2310713148",
+      "nama": "Felicia Avriel Kriestian",
+      "peminatan": "Keselamatan & Kesehatan Kerja (2023)",
+      "judul": "Hubungan Beban Kerja dan Kualitas Tidur dengan Kelelahan Kerja pada Pekerja Produksi Garmen di PT X",
+      "pembimbing": "Dr. Agus Joko Susanto, S.K.M., M.K.K.K. (L)",
+      "pendamping": "Promisetyaningrum Fitria Nurani, S.K.M., M.P.H. (AA)",
+      "penguji_utama": "Dr. Januar Ariyanto, S.K.M., M.Kes. (L)"
+    },
+    {
+      "no": 21,
+      "nim": "2310713101",
+      "nama": "Nayla Alfiah",
+      "peminatan": "Keselamatan & Kesehatan Kerja (2023)",
+      "judul": "HUBUNGAN KARAKTERISTIK INDIVIDU DENGAN KELELAHAN VISUAL PADA PEKERJA BERBASIS LAYAR PT X TAHUN 2026",
+      "pembimbing": "Dr. Januar Ariyanto, S.K.M., M.Kes. (L)",
+      "pendamping": "Dr. Agus Joko Susanto, S.K.M., M.K.K.K. (L)",
+      "penguji_utama": "Dr. Ns. Dyah Utari, S.Kep., M.K.K.K. (LK)"
+    },
+    {
+      "no": 22,
+      "nim": "2310713147",
+      "nama": "Grace Yohana Meilianie",
+      "peminatan": "Keselamatan & Kesehatan Kerja (2023)",
+      "judul": "HUBUNGAN PSYCHOLOGICAL SAFETY DAN PENGETAHUAN PEKERJA TERHADAP BUDAYA PELAPORAN INSIDEN NYARIS CELAKA DI PT. X JAKARTA SELATAN 2026",
+      "pembimbing": "Dr. Ns. Dyah Utari, S.Kep., M.K.K.K. (LK)",
+      "pendamping": "Dr. Suparni, S.T., M.K.K.K. (L)",
+      "penguji_utama": "Dr. Januar Ariyanto, S.K.M., M.Kes. (L)"
+    }
+  ],
+  "koordinator_prodi": {
+    "nama": "Dr. Suparni, ST., M.K.K.K",
+    "nip": "197705072024212008",
+    "jabatan": "Koordinator Program Studi Kesehatan Masyarakat Program Sarjana"
+  }
+}
